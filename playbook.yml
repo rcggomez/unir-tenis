@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  vars:
+    first_name: "Aitor"
+    last_name: "Menta"
+    city: "Madrid"
+    output_dir: "/vagrant"
+  vars_files:
+    - partido_vars.yml
+  pre_tasks:
+    - name: Set output directory based on deployment environment
+      set_fact:
+        output_dir: "{{ '/home/ubuntu/unir-tenis' if deployment_env == 'aws_ec2' else '/vagrant' }}"
+  
+  roles:
+    - partido
+  
+  tasks:
+    - name: Mostrar contenido del archivo generado
+      command: cat "{{ output_dir }}/partido.txt"
+      register: file_content
+    - name: Mostrar contenido en pantalla
+      debug:
+        msg: "{{ file_content.stdout_lines }}"

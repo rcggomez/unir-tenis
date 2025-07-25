@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  unir-tenis:
+    image: ubuntu:20.04
+    container_name: unir-tenis-container
+    volumes:
+      - ./:/vagrant
+    environment:
+      - DEPLOYMENT_ENV=docker
+    command: /bin/bash /vagrant/scripts/docker_entrypoint.sh

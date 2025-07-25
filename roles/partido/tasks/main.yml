@@ -1,0 +1,38 @@
+---
+- name: Instalar dependencias necesarias
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - python3
+    - python3-pip
+    - curl
+
+- name: Instalar requests via pip
+  pip:
+    name: requests
+    executable: pip3
+
+- name: Obtener datos del segundo tenista desde la API
+  uri:
+    url: "https://randomuser.me/api/?results=1"
+    method: GET
+    return_content: yes
+    timeout: 30
+  register: random_user
+  retries: 3
+  delay: 5
+  until: random_user.status == 200
+
+- name: Crear directorio de salida si no existe
+  file:
+    path: "{{ output_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Generar archivo con información del partido
+  template:
+    src: partido.txt.j2
+    dest: "{{ output_dir }}/partido.txt"
+    mode: '0644'
