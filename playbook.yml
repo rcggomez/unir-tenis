@@ -6,20 +6,82 @@
     last_name: "Menta"
     city: "Madrid"
     output_dir: "/vagrant"
+    api_url: "https://randomuser.me/api/"
   vars_files:
     - partido_vars.yml
-  pre_tasks:
-    - name: Set output directory based on deployment environment
-      set_fact:
-        output_dir: "{{ '/home/ubuntu/unir-tenis' if deployment_env == 'aws_ec2' else '/vagrant' }}"
-  
-  roles:
-    - partido
   
   tasks:
-    - name: Mostrar contenido del archivo generado
+    - name: Instalar dependencias necesarias
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - python3
+        - python3-pip
+        - curl
+
+    - name: Instalar requests via pip
+      pip:
+        name: requests
+        executable: pip3
+
+    - name: Intentar obtener datos de la API (versión simple)
+      uri:
+        url: "{{ api_url }}"
+        method: GET
+        return_content: yes
+        status_code: 200
+        timeout: 10
+      register: api_result
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Configurar datos mock para API fallida
+      set_fact:
+        api_first_name: "Serena"
+        api_last_name: "Williams"
+        api_city: "Miami"
+        api_id: "9876"
+      when: api_result is failed or api_result.json.results is not defined
+
+    - name: Extraer datos de la API si fue exitosa
+      set_fact:
+        api_first_name: "{{ api_result.json.results[0].name.first | capitalize }}"
+        api_last_name: "{{ api_result.json.results[0].name.last | capitalize }}"
+        api_city: "{{ api_result.json.results[0].location.city | capitalize }}"
+        api_id: "{{ api_result.json.results[0].login.uuid }}"
+      when: api_result is succeeded and api_result.json.results is defined
+
+    - name: Crear directorio de salida
+      file:
+        path: "{{ output_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Generar archivo de partido
+      copy:
+        content: |
+          ** INFORMACION DEL PARTIDO UNIR **
+          
+          First Name: {{ first_name }}.
+          Last Name: {{ last_name }}.
+          City: {{ city }}.
+          id: {{ id }}.
+          
+          First Name: {{ api_first_name }}.
+          Last Name: {{ api_last_name }}.
+          City: {{ api_city }}.
+          id: {{ api_id }}.
+          
+          Fecha: {{ ansible_date_time.iso8601 }}.
+        dest: "{{ output_dir }}/partido.txt"
+        mode: 0644
+
+    - name: Mostrar contenido del archivo
       command: cat "{{ output_dir }}/partido.txt"
       register: file_content
-    - name: Mostrar contenido en pantalla
+    
+    - name: Mostrar resultados
       debug:
         msg: "{{ file_content.stdout_lines }}"
