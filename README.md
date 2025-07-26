@@ -24,7 +24,7 @@ Este proyecto automatiza la creación de un archivo con la información de un pa
 ---
 
 ## 📁 Estructura del proyecto
-
+```
 UNIR-TENIS/
 │
 ├── .vagrant/ # Archivos generados por Vagrant
@@ -46,7 +46,7 @@ UNIR-TENIS/
 ├── playbook.yml # Playbook principal de Ansible
 ├── Vagrantfile # Definición de VM y provisión con Ansible
 
-
+```
 
 
 ---
