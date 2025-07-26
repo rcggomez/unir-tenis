@@ -69,13 +69,13 @@ vagrant up
 ```
 Resultado: se genera /vagrant/partido.txt dentro de la VM con los datos del partido.
 
-🐳 Opción 2: Despliegue con Docker Desktop
+### 🐳 Opción 2: Despliegue con Docker Desktop
 ```
 docker-compose up --build
 ```
 El contenedor ejecutará el playbook y generará el archivo partido.txt.
 
-☁️ Opción 3: Despliegue en AWS EC2
+### ☁️ Opción 3: Despliegue en AWS EC2
 Lanza una instancia EC2 Ubuntu.
 
 Transfiere el proyecto con scp o Git.
