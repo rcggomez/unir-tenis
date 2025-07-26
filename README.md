@@ -64,12 +64,15 @@ UNIR-TENIS/
 
 ### 📦 Opción 1: Despliegue local con Vagrant
 
-```bash
+```
 vagrant up
+```
 Resultado: se genera /vagrant/partido.txt dentro de la VM con los datos del partido.
 
 🐳 Opción 2: Despliegue con Docker Desktop
+```
 docker-compose up --build
+```
 El contenedor ejecutará el playbook y generará el archivo partido.txt.
 
 ☁️ Opción 3: Despliegue en AWS EC2
@@ -78,9 +81,10 @@ Lanza una instancia EC2 Ubuntu.
 Transfiere el proyecto con scp o Git.
 
 Ejecuta:
-
+```
 chmod +x scripts/aws_ec2_deploy.sh
 ./scripts/aws_ec2_deploy.sh
+```
 
 Este script instala Ansible y ejecuta automáticamente el playbook.
 
