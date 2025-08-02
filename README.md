@@ -63,7 +63,7 @@ UNIR-TENIS/
   - Clave PEM de EC2  
   - AWS CLI configurada (opcional)
 - **Ansible**:
- - ([Instalar Ansible en Windows 11](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
+  - ([Instalar Ansible en Windows 11](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
 
 ---
 
