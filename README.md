@@ -56,7 +56,7 @@ UNIR-TENIS/
 - **VirtualBox** y **Vagrant** instalados para ejecución local
 - **Docker Desktop** instalado (opcional)
 - **Cuenta AWS** con acceso SSH y clave `.pem` (opcional)
-- Ansible instalado si se ejecuta en EC2 o directamente
+- Ansible instalado si se ejecuta en EC2 o directamente en windows 11 (Instalar Ansible en Windows.md)
 
 ---
 
