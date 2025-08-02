@@ -1,14 +1,13 @@
-# 🎾 Generador Automático de Partidos de Tenis - UNIR
+# 🎾 Generador Automático de Partidos de Tenis | Ansible + Vagrant + Docker + AWS
 
 Este proyecto automatiza la creación de un archivo con la información de un partido de tenis entre dos jugadores, usando **Ansible** y **Vagrant**. Adicionalmente, el despliegue está preparado para funcionar también en **Docker Desktop** y **AWS EC2**, lo cual permite practicar la portabilidad de automatizaciones en distintos entornos.
 
 ---
 
-## 📋 Objetivos
-
-- Automatizar la generación de un partido de tenis con datos de dos jugadores.
-- Practicar el uso de **playbooks**, **roles**, **variables** y módulos de Ansible.
-- Ejecutar la solución en distintos entornos (local y nube).
+## 🎯 Objetivos  
+✔️ Automatizar la generación de un partido de tenis con datos de dos jugadores.  
+✔️ Practicar **playbooks**, **roles**, **variables** y módulos de Ansible en entornos multiplataforma.  
+✔️ Ejecutar la solución en local (Vagrant), contenedores (Docker) y nube (AWS EC2). 
 
 ---
 
@@ -20,6 +19,12 @@ Este proyecto automatiza la creación de un archivo con la información de un pa
 - [Docker](https://www.docker.com/)
 - [AWS EC2](https://aws.amazon.com/ec2/)
 - API pública: [https://randomuser.me/](https://randomuser.me/api/)
+
+| Tecnología | Descripción |  
+|------------|-------------|  
+| [Ansible](https://www.ansible.com/) | Automatización de la generación del partido. |  
+| [Vagrant](https://www.vagrantup.com/) | Creación de entornos virtuales locales. |  
+| [AWS EC2](https://aws.amazon.com/ec2/) | Despliegue en la nube. | 
 
 ---
 
@@ -47,8 +52,10 @@ UNIR-TENIS/
 ├── Vagrantfile # Definición de VM y provisión con Ansible
 
 ```
+```bash
+tree -L 3 --dirsfirst
 
-
+```
 ---
 
 ## ⚙️ Requisitos previos
@@ -61,6 +68,13 @@ UNIR-TENIS/
 ---
 
 ## 🚀 Instrucciones de uso
+
+### Clonado de reporitorio
+```
+mkdir <nombre de carpeta>                                # Crear localmente una carpeta en donde se almacenara el repositorio clonado
+cd <nombre de carpeta>                                   # ingresar a la carpeta 
+git clone https://github.com/rcggomez/unir-tenis.git     # Clonar repositorio
+```
 
 ### 📦 Opción 1: Despliegue local con Vagrant
 
