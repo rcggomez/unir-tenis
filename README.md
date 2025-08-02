@@ -19,7 +19,7 @@ Este proyecto automatiza la creación de un archivo con la información de un pa
 - [VirtualBox](https://www.virtualbox.org/)
 - [Docker](https://www.docker.com/)
 - [AWS EC2](https://aws.amazon.com/ec2/)
-- API pública: [https://randomuser.me/](https://randomuser.me/)
+- API pública: [https://randomuser.me/](https://randomuser.me/api/)
 
 ---
 
