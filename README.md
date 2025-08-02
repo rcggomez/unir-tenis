@@ -5,6 +5,7 @@ Este proyecto automatiza la creación de un archivo con la información de un pa
 ---
 
 ## 🎯 Objetivos  
+
 ✔️ Automatizar la generación de un partido de tenis con datos de dos jugadores.  
 ✔️ Practicar **playbooks**, **roles**, **variables** y módulos de Ansible en entornos multiplataforma.  
 ✔️ Ejecutar la solución en local (Vagrant), contenedores (Docker) y nube (AWS EC2). 
@@ -13,18 +14,14 @@ Este proyecto automatiza la creación de un archivo con la información de un pa
 
 ## 🖥️ Tecnologías utilizadas
 
-- [Ansible](https://www.ansible.com/)
-- [Vagrant](https://www.vagrantup.com/)
-- [VirtualBox](https://www.virtualbox.org/)
-- [Docker](https://www.docker.com/)
-- [AWS EC2](https://aws.amazon.com/ec2/)
-- API pública: [https://randomuser.me/](https://randomuser.me/api/)
-
 | Tecnología | Descripción |  
 |------------|-------------|  
 | [Ansible](https://www.ansible.com/) | Automatización de la generación del partido. |  
-| [Vagrant](https://www.vagrantup.com/) | Creación de entornos virtuales locales. |  
-| [AWS EC2](https://aws.amazon.com/ec2/) | Despliegue en la nube. | 
+| [Vagrant](https://www.vagrantup.com/) | Creación de entornos virtuales locales. |
+| [VirtualBox](https://www.virtualbox.org/) | Creación de entornos virtuales locales. | 
+| [Docker](https://www.docker.com/)| Usar contenedor para la app |
+| [AWS EC2](https://aws.amazon.com/ec2/) | Despliegue en la nube. |
+| [https://randomuser.me/](https://randomuser.me/api/) | API pública |
 
 ---
 
@@ -52,53 +49,95 @@ UNIR-TENIS/
 ├── Vagrantfile # Definición de VM y provisión con Ansible
 
 ```
-```bash
-tree -L 3 --dirsfirst
 
-```
 ---
 
 ## ⚙️ Requisitos previos
 
-- **VirtualBox** y **Vagrant** instalados para ejecución local
-- **Docker Desktop** instalado (opcional)
-- **Cuenta AWS** con acceso SSH y clave `.pem` (opcional)
-- Ansible instalado si se ejecuta en EC2 o directamente en windows 11 ([Instalar Ansible en Windows](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
+- **Local (Vagrant)**:  
+  - VirtualBox ≥ 6.0  
+  - Vagrant ≥ 2.3  
+- **Docker**:  
+  - Docker Desktop ≥ 4.0  
+- **AWS**:  
+  - Clave PEM de EC2  
+  - AWS CLI configurada (opcional)
+- **Ansible**:
+ - ([Instalar Ansible en Windows 11](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
 
 ---
 
-## 🚀 Instrucciones de uso
+## 🚀 Cómo Usar en local
 
-### Clonado de reporitorio
+### 1️⃣ Clonar el Repositorio 
 ```
 mkdir <nombre de carpeta>                                # Crear localmente una carpeta en donde se almacenara el repositorio clonado
 cd <nombre de carpeta>                                   # ingresar a la carpeta 
 git clone https://github.com/rcggomez/unir-tenis.git     # Clonar repositorio
+cd unir-tenis 
 ```
 
-### 📦 Opción 1: Despliegue local con Vagrant
+### 2️⃣ Ejecutar en Vagrant (Local)
 
 ```
-vagrant up
+vagrant up  # Inicia VM y ejecuta Ansible  
+vagrant ssh # Opcional: Acceder a la VM  
 ```
-Resultado: se genera /vagrant/partido.txt dentro de la VM con los datos del partido.
+Nota: El archivo partido.txt se genera en /vagrant/.
 
-### 🐳 Opción 2: Despliegue con Docker Desktop
+### 3️⃣ Ejecutar en Docker
 ```
 docker-compose up --build
 ```
 El contenedor ejecutará el playbook y generará el archivo partido.txt.
 
-### ☁️ Opción 3: Despliegue en AWS EC2
-Lanza una instancia EC2 Ubuntu.
+## ☁️ Como usar en AWS EC2
 
-Transfiere el proyecto con scp o Git.
+📌 Requisitos previos
+Cuenta AWS activa con permisos para lanzar instancias EC2.
+- Clave SSH (.pem) descargada y guardada en ~/.ssh/ (ej: unir-tenis-key.pem).
+---
+## 🚀 Pasos para ejecutar el proyecto en EC2
+### 1️⃣ Lanzar una instancia EC2 Ubuntu
+- AMI recomendada: Ubuntu Server 22.04 LTS (HVM).
+  - Tipo de instancia: t2.micro (gratis en capa free tier).
+  - Configuración clave:
+    -Asegúrate de asignar un grupo de seguridad que permita:
+      - SSH (puerto 22) desde tu IP.
+      - Acceso HTTP/HTTPS si es necesario.
+  - Selecciona tu par de claves (.pem) al crear la instancia.
 
-Ejecuta:
+### 2️⃣ Conectarse a la instancia vía SSH
+
 ```
+chmod 400 ~/.ssh/unir-tenis-key.pem  # Asegurar permisos de la clave
+ssh -i ~/.ssh/unir-tenis-key.pem ubuntu@<IP_PUBLICA_EC2>
+```
+
+###3️⃣ Clonar el repositorio en la instancia
+
+```
+# Instalar Git si no está presente
+sudo apt update && sudo apt install -y git
+
+# Clonar el proyecto
+git clone https://github.com/rcggomez/unir-tenis.git
+cd unir-tenis
+```
+
+### 4️⃣ Ejecutar el script de despliegue automático
+
+```
+# Dar permisos de ejecución y correr el script
 chmod +x scripts/aws_ec2_deploy.sh
 ./scripts/aws_ec2_deploy.sh
 ```
 
-Este script instala Ansible y ejecuta automáticamente el playbook.
+### 5️⃣ Verificar el archivo generado
+
+```
+cat partido.txt  # Mostrará el resultado del partido
+```
+
+
 
