@@ -114,7 +114,7 @@ chmod 400 ~/.ssh/unir-tenis-key.pem  # Asegurar permisos de la clave
 ssh -i ~/.ssh/unir-tenis-key.pem ubuntu@<IP_PUBLICA_EC2>
 ```
 
-###3️⃣ Clonar el repositorio en la instancia
+### 3️⃣ Clonar el repositorio en la instancia
 
 ```
 # Instalar Git si no está presente
