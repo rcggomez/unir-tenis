@@ -56,7 +56,7 @@ UNIR-TENIS/
 - **VirtualBox** y **Vagrant** instalados para ejecución local
 - **Docker Desktop** instalado (opcional)
 - **Cuenta AWS** con acceso SSH y clave `.pem` (opcional)
-- Ansible instalado si se ejecuta en EC2 o directamente en windows 11 ([Instalar Ansible en Windows.md](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
+- Ansible instalado si se ejecuta en EC2 o directamente en windows 11 ([Instalar Ansible en Windows](https://github.com/rcggomez/unir-tenis/blob/41073608e0a1ed694261099166847dc4ea935dc6/Instalar%20Ansible%20en%20Windows.md))
 
 ---
 
